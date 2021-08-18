@@ -25,10 +25,7 @@ typedef struct s_fd
 char	*get_next_line(int fd);
 
 /* get_next_line_utils.c */
-/* free memory */
 void	fdlst_clear(t_fd **fdlst, t_fd *target);
-
-/* libft */
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strndup(const char *s1, size_t n);

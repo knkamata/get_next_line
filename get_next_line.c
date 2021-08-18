@@ -70,22 +70,25 @@ static t_fd	*newfd(int fd)
 
 static t_fd	*setfd(t_fd **fdlst, int fd)
 {
+	t_fd	*target;
+
 	if (!fdlst)
 		return (NULL);
-	if (!(*fdlst))
+	target = *fdlst;
+	if (!target)
 	{
-		*fdlst = newfd(fd);
-		return (*fdlst);
+		target = newfd(fd);
+		*fdlst = target;
+		return (target);
 	}
-	while (*fdlst)
-	{
-		if ((*fdlst)->value == fd)
-			return (*fdlst);
-		if (!((*fdlst)->next))
-			break ;
-		*fdlst = (*fdlst)->next;
-	}
-	return ((*fdlst)->next = newfd(fd));
+	while (target && (target->value != fd))
+		target = target->next;
+	if (target)
+		return (target);
+	target = newfd(fd);
+	target->next = *fdlst;
+	*fdlst = target;
+	return (target);
 }
 
 char	*get_next_line(int fd)

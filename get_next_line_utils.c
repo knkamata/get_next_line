@@ -73,14 +73,17 @@ void	fdlst_clear(t_fd **fdlst, t_fd *target)
 
 	if (!fdlst || !(*fdlst))
 		return ;
-	while (*fdlst)
+	if (*fdlst == target)
 	{
-		tmp = (*fdlst)->next;
-		if (*fdlst == target)
-		{
-			free((*fdlst)->content);
-			free(*fdlst);
-		}
-		*fdlst = tmp;
+		*fdlst = target->next;
+		free(target->content);
+		free(target);
+		return ;
 	}
+	tmp = *fdlst;
+	while (tmp && (tmp->next != target))
+		tmp = tmp->next;
+	tmp->next = target->next;
+	free(target->content);
+	free(target);
 }
